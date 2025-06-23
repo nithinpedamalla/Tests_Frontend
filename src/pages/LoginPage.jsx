@@ -97,7 +97,7 @@ const LoginPage = () => {
       </section>
 
       <footer className="bg-white shadow-inner mt-10 py-4 text-center text-gray-500 text-sm">
-        © 2025 NNIIT. All rights reserved.
+        © 2025 . All rights reserved.
         <div className="mt-2 space-x-4">
           <a href="#" className="hover:text-purple-600">Twitter</a>
           <a href="#" className="hover:text-purple-600">LinkedIn</a>
