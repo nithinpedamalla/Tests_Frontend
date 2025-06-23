@@ -33,6 +33,7 @@ function TeacherQuestionPage() {
     JSON.parse(localStorage.getItem("selectedSubjects") || "[]");
   const selectedChapters = location.state?.chapters || 
     JSON.parse(localStorage.getItem("selectedChapters") || "[]");
+      const API_URL="https://tests-backend-yiwk.onrender.com";
 
   // State variables
   const [loading, setLoading] = useState(true);
@@ -88,7 +89,7 @@ function TeacherQuestionPage() {
   const fetchQuestions = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/questions", {
+      const response = await axios.post(`${API_URL}/api/questions`, {
         class: selectedClass,
         subjects: selectedSubjects,
         chapters: selectedChapters
@@ -234,7 +235,7 @@ function TeacherQuestionPage() {
       
       if (isAddingNew) {
         // Create new question
-        const response = await axios.post("http://localhost:5000/api/questions/add", currentQuestion);
+        const response = await axios.post(`${API_URL}/api/questions/add`, currentQuestion);
         if (response.data) {
           alert("Question created successfully!");
           // Refresh questions
@@ -245,7 +246,7 @@ function TeacherQuestionPage() {
       } else {
         // Update existing question
         const response = await axios.put(
-          `http://localhost:5000/api/questions/${currentQuestion._id}`, 
+          `${API_URL}/api/questions/${currentQuestion._id}`, 
           currentQuestion
         );
         if (response.data) {
@@ -279,7 +280,7 @@ function TeacherQuestionPage() {
       setLoading(true);
       
       const response = await axios.delete(
-        `http://localhost:5000/api/questions/${currentQuestion._id}`
+        `${API_URL}/api/questions/${currentQuestion._id}`
       );
       
       if (response.data) {

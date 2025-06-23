@@ -36,8 +36,9 @@ export default function Signup() {
   };
 
   const handleSignup = async () => {
+    const API_URL="https://tests-backend-yiwk.onrender.com";
     try {
-      await axios.post("http://localhost:5000/api/signup", formData);
+      await axios.post(`${API_URL}/api/signup`, formData);
       alert("Signup successful! Please login.");
       navigate("/login");
     } catch (error) {

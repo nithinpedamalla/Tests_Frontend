@@ -111,6 +111,8 @@ function TestPage() {
     localStorage.setItem(`${testSessionId}_viewMode`, viewMode);
   }, [viewMode, testSessionId]);
 
+    const API_URL="https://tests-backend-yiwk.onrender.com";
+
   // Scroll to current question when index changes in "all" view mode
   useEffect(() => {
     if (viewMode === "all" && questionRefs.current[currentQuestionIndex]) {
@@ -125,7 +127,7 @@ function TestPage() {
   const fetchQuestions = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/api/questions", {
+      const response = await axios.post(`${API_URL}/api/questions`, {
         class: selectedClass,
         subjects: selectedSubjects,
         chapters: selectedChapters

@@ -42,10 +42,11 @@ function TeacherSelection (){
   
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+   const API_URL="https://tests-backend-yiwk.onrender.com";
 
   // Fetch classes when component mounts
   useEffect(() => {
-    axios.get("http://localhost:5000/api/classes")
+    axios.get(`${API_URL}/api/classes`)
       .then((res) => setClasses(res.data))
       .catch((err) => logger.error("Error fetching classes:", err));
   }, []);
@@ -54,7 +55,7 @@ function TeacherSelection (){
   useEffect(() => {
     if (selectedClass) {
       localStorage.setItem("selectedClass", selectedClass);
-      axios.post("http://localhost:5000/api/subjects", { class: selectedClass })
+      axios.post(`${API_URL}/api/subjects`, { class: selectedClass })
         .then((res) => {
           setSubjects(res.data);
         })
@@ -114,7 +115,7 @@ function TeacherSelection (){
       // Fetch chapters for this subject if not already loaded
       if (!subjectChapters[subject]) {
         try {
-          const res = await axios.post("http://localhost:5000/api/chapters", {
+          const res = await axios.post(`${API_URL}/api/chapters`, {
             class: selectedClass,
             subjects: [subject]
           });
@@ -151,7 +152,7 @@ function TeacherSelection (){
     // If expanding and chapters not loaded yet, fetch them
     if (!expandedSubjects[subject] && !subjectChapters[subject]) {
       try {
-        const res = await axios.post("http://localhost:5000/api/chapters", {
+        const res = await axios.post(`${API_URL}/api/chapters`, {
           class: selectedClass,
           subjects: [subject]
         });
