@@ -82,7 +82,7 @@ export default function Signup() {
       <div 
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: "url('/api/placeholder/1920/1080')",
+          // backgroundImage: "url('/api/placeholder/1920/1080')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundAttachment: "fixed"
