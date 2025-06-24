@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -14,10 +16,15 @@ export default function Signup() {
 
   const handleSignup = async () => {
     const API_URL = "https://tests-backend-yiwk.onrender.com";
+    console.log("Signup formData:", formData);
+    const navigate = useNavigate();
+
+
     try {
       await axios.post(`${API_URL}/api/signup`, formData);
       alert("Signup successful! Please login.");
       // Navigate to login - you'll need to implement navigation
+      navigate("/login");
       console.log("Navigate to login");
     } catch (error) {
       console.error(error);
@@ -92,9 +99,10 @@ export default function Signup() {
 
         <div className="mt-6 text-center text-gray-600">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
-            Login
-          </a>
+         <Link to="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+  Login
+</Link>
+
         </div>
       </div>
     </div>
