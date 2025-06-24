@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -17,15 +18,15 @@ export default function Signup() {
   const handleSignup = async () => {
     const API_URL = "https://tests-backend-yiwk.onrender.com";
     console.log("Signup formData:", formData);
-    const navigate = useNavigate();
+    
 
 
     try {
       await axios.post(`${API_URL}/api/signup`, formData);
       alert("Signup successful! Please login.");
       // Navigate to login - you'll need to implement navigation
-      navigate("/login");
       console.log("Navigate to login");
+      navigate("/login");
     } catch (error) {
       console.error(error);
       alert("Signup failed.");
