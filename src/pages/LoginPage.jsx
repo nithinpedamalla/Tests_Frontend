@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-
 const LoginPage = () => {
   const [role, setRole] = useState("student");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // Check if user is trying to login as teacher
+    if (role === "teacher") {
+      alert("Teacher login is currently disabled. Please contact an administrator.");
+      return;
+    }
+
     if (!username || !password) {
       alert("Please enter both username and password.");
       return;
     }
+    
     try {
       const res = await axios.post("https://tests-backend-yiwk.onrender.com/api/login", {
         username,
@@ -62,17 +68,31 @@ const LoginPage = () => {
                 className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
               >
                 <option value="student">Student</option>
-                <option value="teacher">Teacher</option>
+                <option value="teacher" disabled>Teacher (Login for Student)</option>
               </select>
             </div>
+
+            {role === "teacher" && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <p className="text-sm text-yellow-800">
+                  Teacher login is currently disabled. Please contact an administrator for access.
+                </p>
+              </div>
+            )}
+
             <div>
               <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                  role === "teacher" 
+                    ? "bg-gray-100 cursor-not-allowed" 
+                    : "focus:ring-purple-400"
+                }`}
                 required
+                disabled={role === "teacher"}
               />
             </div>
             <div>
@@ -81,19 +101,29 @@ const LoginPage = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className={`w-full p-3 border rounded-lg focus:outline-none focus:ring-2 ${
+                  role === "teacher" 
+                    ? "bg-gray-100 cursor-not-allowed" 
+                    : "focus:ring-purple-400"
+                }`}
                 required
+                disabled={role === "teacher"}
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-700 transition"
+              className={`w-full p-3 rounded-lg transition ${
+                role === "teacher"
+                  ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                  : "bg-purple-600 text-white hover:bg-purple-700"
+              }`}
+              disabled={role === "teacher"}
             >
               Login
             </button>
           </form>
           <p className="mt-4 text-center text-gray-600">
-            Don’t have an account? <Link to="/signup" className="text-purple-600 hover:underline">Sign up here</Link>
+            Don't have an account? <Link to="/signup" className="text-purple-600 hover:underline">Sign up here</Link>
           </p>
         </div>
       </section>
